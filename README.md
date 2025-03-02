@@ -4,11 +4,11 @@
   <p align="center">
     <a href="https://liangpan99.github.io/"><strong>Liang Pan</strong></a>
     ·  
-    <a href="https://wangjingbo1219.github.io/"><strong>Jingbo Wang</strong></a>
+    <a href="https://scholar.google.com/citations?user=GStTsxAAAAAJ&hl=en&oi=ao"><strong>Jingbo Wang</strong></a>
     ·
     <a href="http://www.buzhenhuang.com/"><strong>Buzhen Huang</strong></a>
     ·
-    <a href="https://github.com/budiu-39"><strong>Junyu Zhang</strong>
+    <a href="https://budiu-39.github.io/"><strong>Junyu Zhang</strong>
     ·
     <a href="https://haofanwang.github.io/"><strong>Haofan Wang</strong></a>
     ·
@@ -30,12 +30,12 @@
       <img src='https://img.shields.io/badge/InterScene-Page-orange?style=for-the-badge&logo=Google%20chrome&logoColor=white&labelColor=D35400' alt='Project Page'></a>
   </p>
 
-Our framework enables physically simulated characters to perform long-term interaction tasks in diverse and complex 3D scenes via composing reusable skills that include sitting (gray), getting up (blue), and avoiding obstacles (red).
+We propose InterScene, a novel method that generates physically plausible long-term motion sequences in 3D indoor scenes. Our approach enables physics-based characters to exhibit natural interaction-involved behaviors, such as sitting down (gray), getting up (blue), and walking while avoiding obstacles (pink).
 
 ## News
-
-- **[Nov. &nbsp;9, 2023]** Code for training and evaluating the sit policy released.
-- **[Oct. 16, 2023]** Paper accepted to 3DV 2024. We plan to release the code in mid-November 2023.
+- **[2025-03-03]** Update camera-ready paper and website.
+- **[2023-11-09]** Release code for training and evaluating the sit policy.
+- **[2023-10-16]** Paper got accepted by 3DV 2024.
 
 ## Dependencies
 
@@ -105,17 +105,19 @@ python InterScene/run.py --task HumanoidLocationSit --cfg_env InterScene/data/cf
 ## Citation
 
 ```bibtex
-@inproceedings{pan2023synthesizing,
-    title={Synthesizing Physically Plausible Human Motions in 3D Scenes}, 
-    author={Liang Pan and Jingbo Wang and Buzhen Huang and Junyu Zhang and Haofan Wang and Xu Tang and Yangang Wang},
-    booktitle={International Conference on 3D Vision (3DV)},
-    year={2024}
+@inproceedings{pan2024synthesizing,
+  title={Synthesizing physically plausible human motions in 3d scenes},
+  author={Pan, Liang and Wang, Jingbo and Huang, Buzhen and Zhang, Junyu and Wang, Haofan and Tang, Xu and Wang, Yangang},
+  booktitle={2024 International Conference on 3D Vision (3DV)},
+  pages={1498--1507},
+  year={2024},
+  organization={IEEE}
 }
 ```
 
 ## References
-This repository is built on top of the following amazing repositories: 
+This repository is built on the top of the following amazing codebases: 
 * Main code framework is from: [ASE](https://github.com/nv-tlabs/ASE)
 * Some scripts are from: [Pacer](https://github.com/nv-tlabs/pacer/tree/main), [HuMoR](https://github.com/davrempe/humor)
 
-Please follow the license of the above repositories for usage of that part of the codebase. 
+Please follow the license of the above repositories for the usage of this project.

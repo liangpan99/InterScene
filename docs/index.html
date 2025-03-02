@@ -241,11 +241,11 @@ c {
     <div  align=center class="authors">
        <a href="https://liangpan99.github.io/"> Liang Pan<sup>1</sup></a> 
        &nbsp;  
-       <a href="https://wangjingbo1219.github.io/"> Jingbo Wang<sup>2</sup></a> 
+       <a href="https://scholar.google.com/citations?user=GStTsxAAAAAJ&hl=en&oi=ao/"> Jingbo Wang<sup>2</sup></a> 
        &nbsp;  
        <a href="http://www.buzhenhuang.com/"> Buzhen Huang<sup>1</sup></a> 
        &nbsp;  
-       <a href="https://github.com/budiu-39"> Junyu Zhang<sup>1</sup></a> 
+       <a href="https://budiu-39.github.io/"> Junyu Zhang<sup>1</sup></a> 
        <br>
        <a href="https://haofanwang.github.io/"> Haofan Wang<sup>3</sup></a> 
        &nbsp;  
@@ -276,7 +276,7 @@ c {
     <br>
 
     <div align=center>
-        3DV 2024
+        International Conference on 3D Vision (3DV 2024)
     </div>
     
     
@@ -293,19 +293,40 @@ c {
     
     <br>
     <p align="justify">
-        Synthesizing physically plausible human motions in 3D scenes is a challenging problem. 
-        Kinematics-based methods cannot avoid inherent artifacts (e.g., penetration and foot skating) due to the lack of physical constraints. 
-        Meanwhile, existing physics-based methods cannot generalize to multi-object scenarios since the policy trained with reinforcement learning has limited modeling capacity. 
-        In this work, we present a framework that enables physically simulated characters to perform long-term interaction tasks in diverse, cluttered, and unseen scenes. 
-        The key idea is to decompose human-scene interactions into two fundamental processes, <strong>Inter</strong>acting and <strong>Nav</strong>igating, which motivates us to construct two reusable <strong>Con</strong>troller, 
-        i.e., <strong>InterCon</strong> and <strong>NavCon</strong>. 
-        Specifically, InterCon contains two complementary policies that enable characters to enter and leave the interacting state (e.g., sitting on a chair and getting up). 
-        To generate interaction with objects at different places, we further design NavCon, a trajectory following policy, to keep characters' locomotion in the free space of 3D scenes. 
-        Benefiting from the divide and conquer strategy, we can train the policies in simple environments and generalize to complex multi-object scenes. 
-        Experimental results demonstrate that our framework can synthesize physically plausible long-term human motions in complex 3D scenes.
+        We present a physics-based character control framework for synthesizing human-scene interactions. 
+        Recent advances adopt physics simulation to mitigate artifacts produced by data-driven kinematic approaches. 
+        However, existing physics-based methods mainly focus on single-object environments, 
+        resulting in limited applicability in realistic 3D scenes with multi-objects. 
+        To address such challenges, we propose a framework that enables physically simulated characters to perform long-term interaction tasks in diverse, cluttered, and unseen 3D scenes. 
+        The key idea is to decouple human-scene interactions into two fundamental processes, 
+        <strong>Inter</strong>acting and <strong>Nav</strong>igating, 
+        which motivates us to construct two reusable <strong>Con</strong>trollers, namely <strong>InterCon</strong> and <strong>NavCon</strong>. 
+        Specifically, InterCon uses two complementary policies to enable characters to enter or leave the interacting state with a particular object 
+        (e.g., sitting on a chair or getting up). 
+        To realize navigation in cluttered environments, we introduce NavCon, 
+        where a trajectory following policy enables characters to track pre-planned collision-free paths. 
+        Benefiting from the divide and conquer strategy, 
+        we can train all policies in simple environments and directly apply them in complex multi-object scenes 
+        through coordination from a rule-based scheduler.
     </p>
     </div>
     </td></tr>
+    </table>
+
+    <center>
+        <h1>Poster</h1>
+    </center>  
+    <hr>
+    <br>
+    <table  align=center width=900px>
+        <tr>
+        <td>
+            <img align="center" width="900px" src="assets/poster.jpg"></img>
+        </td>
+        </tr>
+        <tr>
+        </tr>
+
     </table>
 
     <center>
@@ -360,8 +381,8 @@ c {
         <tr>
             <td>
                 <p>
-                Existing physics-based frameworks cannot generalize to multi-object scenarios 
-                due to the lack of two important abilities: <br> (1-top) continuous interaction, (2-bottom) obstacle avoidance.
+                Existing physics-based scene interaction approaches cannot generalize to multi-object scenes 
+                due to the lack of two crucial abilities: (1) continuous interaction and (2) obstacle avoidance.
                 </p>
             </td>
         </tr>
@@ -381,10 +402,15 @@ c {
         <tr>
         <td>
             <p>
-                The interaction controller consists of two separate control policies, which provide two interaction-involved skills, i.e., sitting and getting up. 
-                The navigation controller employs a trajectory following policy that controls the character's movements along a specific path. 
-                Then, two reusable controllers are combined to synthesize human motions in complex 3D scenes without additional training. 
-                This is achieved by using a finite state machine that receives user instructions to enable the simulated character to perform long-term interaction tasks.
+                Given a multi-object 3D scene, 
+                our goal is to synthesize long-term motion sequences 
+                by controlling a physics-based character to perform a series of scene interaction tasks. 
+                First, our system employs an interaction controller to provide two primary actions, 
+                i.e., sitting down and getting up. 
+                Second, we introduce a navigation controller to acquire another action, 
+                i.e., collision-free trajectory following. 
+                Finally, a rule-based action scheduler is exploited to obtain outputs 
+                by organizing reusable low-level actions according to user-designed instructions.
             </p>
         </td>
         </tr>
@@ -393,23 +419,44 @@ c {
 
 
     <center>
-        <h1>Synthesized Results in Diverse 3D Scenes</h1>
+        <h1>Generated Long-term Motions in Diverse 3D Scenes</h1>
     </center>
     <hr>
     <br>
+    <center>
+        <h2>Images</h2>
+    </center>
+    <table  align=center width=900px>
+        <tr>
+        <td>
+            <img align="center" width="900px" src="assets/results/images.jpg"></img>
+        </td>
+        </tr>
+    </table>
+
+    <center>
+        <h2>Videos</h2>
+    </center>
     <table align="center" width=900px>
         <tr>
-        <td colspan='2'>
+        <td colspan='3'>
             <center>
             <video width="450" controls muted autoplay loop>
-                <source src="./assets/results/scene_0_motion_0.mp4" type="video/mp4">
+                <source src="./assets/results/scene_0_motion_1.mp4" type="video/mp4">
             </video>
             </center>
         </td>
         <td>
             <center>
                 <video width="450"  controls muted autoplay loop>
-                <source src="./assets/results/scene_0_motion_1.mp4" type="video/mp4">
+                <source src="./assets/results/scene_0_motion_0.mp4" type="video/mp4">
+            </video>
+            </center>
+        </td> 
+        <td>
+            <center>
+                <video width="450"  controls muted autoplay loop>
+                <source src="./assets/results/scene_0_motion_2.mp4" type="video/mp4">
             </video>
             </center>
         </td> 
@@ -418,13 +465,20 @@ c {
 
     <table align="center" width=900px>
         <tr>
-        <td colspan='2'>
+        <td colspan='3'>
             <center>
             <video width="450" controls muted autoplay loop>
-                <source src="./assets/results/scene_1_motion_0.mp4" type="video/mp4">
+                <source src="./assets/results/scene_1_motion_2.mp4" type="video/mp4">
             </video>
             </center>
         </td>
+        <td>
+            <center>
+                <video width="450"  controls muted autoplay loop>
+                <source src="./assets/results/scene_1_motion_0.mp4" type="video/mp4">
+            </video>
+            </center>
+        </td> 
         <td>
             <center>
                 <video width="450"  controls muted autoplay loop>
@@ -451,11 +505,18 @@ c {
             </video>
             </center>
         </td> 
+        <td>
+            <center>
+                <video width="450"  controls muted autoplay loop>
+                <source src="./assets/results/scene_2_motion_2.mp4" type="video/mp4">
+            </video>
+            </center>
+        </td> 
         </tr>
     </table>
 
     <center>
-        <h1>Scalability of Our Framework</h1>
+        <h1>Extensibility</h1>
     </center>
     <hr>
     <br>
@@ -477,8 +538,9 @@ c {
     <table align="center" width=900px>
         <tr>
             <td>
-                By training an additional interaction controller, our framework can be extended to new action (e.g., lying down), 
-                which enables physically simulated characters to interaction with objects more diversely.
+                By training an additional interaction controller, a new skill of lying down can be seamlessly integrated into our system,
+                which demonstrates the strong extensibility of our approach. Given two interaction controllers, our extended system enables the physics-based character to first lie on the sofa, then sits on
+                the chair, and finally lie on the bed, exhibiting more diverse long-term interactions.
             </td> 
         </tr>
     </table>
@@ -488,23 +550,23 @@ c {
     </center>
     <hr>
 
-    <div class="section bibtex">
-        <pre>
-@misc{pan2023synthesizing,
-    title={Synthesizing Physically Plausible Human Motions in 3D Scenes}, 
-    author={Liang Pan and Jingbo Wang and Buzhen Huang and Junyu Zhang and Haofan Wang and Xu Tang and Yangang Wang},
-    year={2023},
-    eprint={2308.09036},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV}
-}      
-        </pre>
-    </div>
+        <div class="section bibtex">
+            <pre>
+@inproceedings{pan2024synthesizing,
+    title={Synthesizing physically plausible human motions in 3d scenes},
+    author={Pan, Liang and Wang, Jingbo and Huang, Buzhen and Zhang, Junyu and Wang, Haofan and Tang, Xu and Wang, Yangang},
+    booktitle={2024 International Conference on 3D Vision (3DV)},
+    pages={1498--1507},
+    year={2024},
+    organization={IEEE}
+}
+            </pre>
+        </div>
 
 
 
     <center>
-        <h1>Related Projects</h1>
+        <h1>References</h1>
     </center>
     <hr>
     <p>
@@ -513,9 +575,9 @@ c {
             <li>[2] <a href="https://xbpeng.github.io/projects/InterPhys/index.html">InterPhys</a>: Synthesizing Physical Character-Scene Interactions, SIGGRAPH 2023.</li>
             <li>[3] <a href="https://xbpeng.github.io/projects/AMP/index.html">AMP</a>: Adversarial Motion Priors for Stylized Physics-Based Character Control, SIGGRAPH 2021.</li>
             <li>[4] <a href="https://research.nvidia.com/labs/toronto-ai/trace-pace/">Trace and Pace</a>: Controllable Pedestrian Animation via Guided Trajectory Diffusion, CVPR 2023.</li>
+            <li>We sincerely thank <a href="https://geometry.stanford.edu/projects/humor/">HuMoR</a> for its awesome renderer.</li>
+            <li>The website template is based on <a href="https://nileshkulkarni.github.io/nifty/">this project</a>. <br></li>
         </ul>
-        
-        We sincerely thank <a href="https://geometry.stanford.edu/projects/humor/">HuMoR</a> for its awesome renderer. This project page template is based on <a href="https://nileshkulkarni.github.io/nifty/">this page</a>. <br>
     </p>
     <br>
     
