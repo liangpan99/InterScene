@@ -1,0 +1,134 @@
+:root {
+  color-scheme: light;
+  --ink: #111;
+  --muted: #626262;
+  --line: #e8e8e8;
+  --surface: #f5f5f5;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #fff; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+[hidden] { display: none !important; }
+button, a, summary { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid #111; outline-offset: 5px; }
+::selection { background: #e5e5e5; }
+h1, h2, h3, p, figure { margin: 0; }
+h1, h2, h3 { font-weight: 500; line-height: 1.18; letter-spacing: -.035em; }
+h2 { font-size: clamp(30px, 3.2vw, 42px); }
+h3 { font-size: clamp(23px, 2.5vw, 30px); letter-spacing: -.025em; }
+img, video { display: block; width: 100%; max-width: 100%; }
+img { height: auto; }
+figcaption { text-align: center; }
+sup { position: relative; top: -.15em; margin-left: 2px; font-size: .64em; line-height: 0; }
+.page-width { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+.skip-link { position: absolute; top: 12px; left: 12px; padding: 10px 20px; background: #111; color: #fff; border-radius: 99px; z-index: 10; transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+
+/* A quiet, centered introduction keeps the focus on the research. */
+.hero { --venue-gap: 48px; padding-top: 82px; padding-bottom: calc(var(--venue-gap) + 8px); text-align: center; }
+.hero h1 { font-size: clamp(40px, 4.5vw, 60px); font-weight: 400; line-height: 1.12; letter-spacing: -.045em; }
+.research-title { margin: 25px auto 0; max-width: 920px; font-size: clamp(21px, 2.3vw, 29px); line-height: 1.4; letter-spacing: -.025em; text-wrap: balance; }
+.publication-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.button { display: inline-flex; justify-content: center; align-items: center; gap: 10px; border: 1px solid transparent; border-radius: 999px; min-height: 44px; padding: 10px 20px; font-size: 14px; line-height: 1.4; font-weight: 500; transition: background-color .18s, color .18s; }
+.button-secondary { background: var(--surface); color: var(--ink); }
+.button-secondary:hover { background: #eaeaea; }
+.button-code { background: transparent; color: var(--ink); padding-inline: 16px; }
+.button-code:hover { color: var(--muted); }
+.github-stars { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-variant-numeric: lining-nums tabular-nums; }
+.github-stars > span[aria-hidden] { font-size: 17px; line-height: 1; }
+.research-credits { max-width: 900px; margin: 38px auto 0; }
+.authors { display: flex; flex-wrap: wrap; justify-content: center; column-gap: 17px; row-gap: 5px; font-size: 15px; }
+.authors > span { white-space: nowrap; }
+.authors a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.authors sup { color: var(--muted); }
+.affiliations { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 16px; max-width: 780px; margin: 14px auto 0; color: var(--muted); font-size: 12px; }
+.affiliations > span { white-space: nowrap; }
+.corresponding { margin-top: 8px; font-size: 11px; color: var(--muted); }
+.teaser img { border-radius: 6px; }
+.teaser figcaption { margin: 24px auto 0; font-size: 17px; line-height: 1.6; text-align: center; }
+
+/* Editorial sections, subtle rules, and large media. */
+.section { padding-block: 88px; border-bottom: 1px solid var(--line); }
+.overview { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; margin-top: 12px; }
+.prose { font-size: 17px; line-height: 1.85; color: #333; }
+.prose p + p { margin-top: 22px; }
+.section-heading { max-width: none; margin-bottom: 40px; }
+.section-heading > p { margin-top: 20px; font-size: 18px; line-height: 1.65; color: var(--muted); }
+.pipeline { padding: 26px 20px; background: var(--surface); border-radius: 6px; }
+.pipeline img { mix-blend-mode: multiply; }
+.video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; }
+.video-grid-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.demo { min-width: 0; }
+.video-frame { background: var(--surface); border-radius: 6px; overflow: hidden; }
+.video-frame video { aspect-ratio: 16 / 9; object-fit: contain; background: #ededed; }
+.demo figcaption { margin-top: 14px; font-size: 16px; line-height: 1.5; }
+.citation-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.copy-status { min-height: 24px; margin: 8px 0; font-size: 13px; color: var(--muted); text-align: right; }
+pre { margin: 0; padding: 26px 30px; overflow-x: auto; background: var(--surface); border-radius: 6px; font-size: 13px; line-height: 1.75; tab-size: 2; }
+code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+.footer { display: flex; justify-content: space-between; padding-block: 30px; font-size: 13px; color: var(--muted); }
+.footer > span:first-child { color: var(--ink); font-weight: 500; }
+
+@media (max-width: 800px) {
+  .page-width { width: calc(100% - 40px); }
+  .hero { padding-top: 60px; }
+  .research-title { max-width: 650px; }
+  .section { padding-block: 60px; }
+  .overview { grid-template-columns: 1fr; gap: 26px; }
+  .video-grid-three { grid-template-columns: 1fr; gap: 28px; }
+  .video-grid-three .demo { max-width: 650px; width: 100%; }
+}
+
+@media (max-width: 540px) {
+  .hero { --venue-gap: 40px; padding-top: 40px; }
+  .hero h1 { font-size: clamp(34px, 7.5vw, 40px); }
+  .research-title { margin-top: 20px; font-size: 22px; }
+  .publication-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 340px; gap: 8px; margin: 25px auto 0; }
+  .publication-links .button { padding-inline: 12px; gap: 8px; }
+  .button { padding: 10px 16px; font-size: 13px; }
+  .research-credits { margin-top: 28px; }
+  .authors { font-size: 14px; column-gap: 13px; row-gap: 6px; }
+  .affiliations { font-size: 11px; gap: 4px 12px; }
+  .teaser figcaption { font-size: 15px; padding: 0; margin-top: 20px; }
+  .section-heading { margin-bottom: 28px; }
+  .section-heading > p, .prose { font-size: 16px; }
+  .video-grid { grid-template-columns: 1fr; }
+  .demo figcaption { font-size: 14px; margin-top: 11px; }
+  .pipeline { padding: 12px 6px; }
+  .citation-heading h2 { font-size: 30px; }
+  pre { padding: 20px; font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
+
+/* InterScene's venue and paired comparisons share the TokenHSI visual language. */
+.publication-venue { display: flex; align-items: center; justify-content: center; gap: 24px; width: fit-content; max-width: 100%; margin: var(--venue-gap) auto 0; padding: 22px 28px; border-radius: 10px; background: var(--surface); text-align: left; }
+.venue-name { flex: 0 0 auto; font-size: 16px; font-weight: 600; }
+.venue-description { padding-left: 24px; border-left: 1px solid #ddd; font-size: 14px; color: var(--muted); }
+.media-image { height: auto; border-radius: 6px; }
+.poster-figure { max-width: 1040px; margin-inline: auto; }
+.poster-figure figcaption { margin-top: 20px; color: var(--muted); font-size: 14px; }
+.text-link { text-decoration: underline; text-underline-offset: 3px; }
+.text-link:hover { color: var(--muted); }
+.comparison + .comparison, .scene + .scene { margin-top: 48px; }
+.comparison h3, .scene h3 { margin-bottom: 24px; }
+.results-videos { margin-top: 48px; }
+.extensibility-grid { align-items: start; }
+.extensibility-grid .image-frame { display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 9; background: var(--surface); border-radius: 6px; overflow: hidden; }
+.extensibility-grid .image-frame img { height: 100%; object-fit: contain; }
+.references { max-width: none; padding-left: 24px; margin: 28px 0 0; color: var(--muted); font-size: 15px; line-height: 1.8; }
+.references li + li { margin-top: 12px; }
+.references a, .acknowledgments a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.acknowledgments { margin-top: 28px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+@media (max-width: 540px) {
+  .publication-venue { flex-direction: column; gap: 8px; width: 100%; padding: 20px; text-align: center; }
+  .venue-description { border-left: 0; padding-left: 0; font-size: 13px; }
+  .comparison + .comparison, .scene + .scene { margin-top: 40px; }
+  .comparison h3, .scene h3 { margin-bottom: 20px; }
+}

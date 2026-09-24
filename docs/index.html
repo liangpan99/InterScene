@@ -1,588 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-   <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DB5J2MQV0D"></script>
-    <script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="InterScene: a physics-based character control framework for synthesizing long-term human-scene interactions in diverse 3D scenes.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="InterScene — Synthesizing Physically Plausible Human Motions in 3D Scenes">
+  <meta property="og:description" content="A physics-based framework for long-term human-scene interactions. 3DV 2024.">
+  <meta property="og:image" content="https://liangpan99.github.io/InterScene/assets/teaser.png">
+  <meta property="og:url" content="https://liangpan99.github.io/InterScene/">
+  <title>InterScene</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DB5J2MQV0D"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-DB5J2MQV0D');
-    </script>
-
-    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-    <script type="text/javascript">
-    google.load("jquery", "1.3.2");
-    </script>    
+  </script>
+  <link rel="stylesheet" href="./static/css/index.css">
+  <script defer src="./static/js/index.js"></script>
 </head>
-
-<style type="text/css">
-body {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
-    font-size: 18px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1100px;
-}
-
-h1 {
-    font-weight: 300;
-    margin: 0.4em;
-}
-
-/* p {
-    margin: 0.2em;
-} */
-
-.disclaimerbox {
-    background-color: #eee;
-    border: 1px solid #eeeeee;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    padding: 20px;
-}
-
-video.header-vid {
-    height: 140px;
-    border: 1px solid black;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-}
-
-img.header-img {
-    height: 140px;
-    border: 1px solid black;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-}
-
-img.rounded {
-    border: 1px solid #eeeeee;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-}
-
-a:link,
-a:visited {
-    color: #1367a7;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #208799;
-}
-
-td.dl-link {
-    height: 160px;
-    text-align: center;
-    font-size: 22px;
-}
-
-.layered-paper-big {
-    /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
-    box-shadow:
-        0px 0px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The top layer shadow */
-        5px 5px 0 0px #fff,
-        /* The second layer */
-        5px 5px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The second layer shadow */
-        10px 10px 0 0px #fff,
-        /* The third layer */
-        10px 10px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The third layer shadow */
-        15px 15px 0 0px #fff,
-        /* The fourth layer */
-        15px 15px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The fourth layer shadow */
-        20px 20px 0 0px #fff,
-        /* The fifth layer */
-        20px 20px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The fifth layer shadow */
-        25px 25px 0 0px #fff,
-        /* The fifth layer */
-        25px 25px 1px 1px rgba(0, 0, 0, 0.35);
-    /* The fifth layer shadow */
-    margin-left: 10px;
-    margin-right: 45px;
-}
-
-
-.layered-paper {
-    /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
-    box-shadow:
-        0px 0px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The top layer shadow */
-        5px 5px 0 0px #fff,
-        /* The second layer */
-        5px 5px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The second layer shadow */
-        10px 10px 0 0px #fff,
-        /* The third layer */
-        10px 10px 1px 1px rgba(0, 0, 0, 0.35);
-    /* The third layer shadow */
-    margin-top: 5px;
-    margin-left: 10px;
-    margin-right: 30px;
-    margin-bottom: 5px;
-}
-
-.vert-cent {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-hr {
-    margin: 0;
-    border: 0;
-    height: 1.5px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-}
-
-.rotate {
-    /* FF3.5+ */
-    -moz-transform: rotate(-90.0deg);
-    /* Opera 10.5 */
-    -o-transform: rotate(-90.0deg);
-    /* Saf3.1+, Chrome */
-    -webkit-transform: rotate(-90.0deg);
-    /* IE6,IE7 */
-    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
-    /* IE8 */
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
-    /* Standard */
-    transform: rotate(-90.0deg);
-}
-
-c {
-    white-space: nowrap;
-    writing-mode: tb-rl;
-    transform: rotate(-180.0deg);
-}
-
-    .topnav {
-      background-color: #eeeeee;
-      overflow: hidden;
-    }
-
-    .topnav div {
-      max-width: 1070px;
-      margin: 0 auto;
-    }
-
-    .topnav a {
-      display: inline-block;
-      color: black;
-      text-align: center;
-      vertical-align: middle;
-      padding: 16px 16px;
-      text-decoration: none;
-      font-size: 16px;
-    }
-
-    .topnav img {
-      width: 100%;
-      margin: 0.2em 0px 0.3em 0px;
-    }
-    .authors div{
-        text-align: center;
-    }
-    .content{
-        margin-bottom: 2em;
-        font-size: 12pt;
-    }
-    p {
-        display: block;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-    }
-
-.bibtex pre
-{
-    margin-bottom: 0;
-    font-family: Consolas, Monaco, monospace;
-    white-space: pre-wrap; /* CSS 3 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* IE 5.5+ */
-    width: 100%;
-    color: #444;
-    padding: 0px;
-    background: rgba(238, 238, 238, 0.623);
-    border: 1px solid #ccc;
-    overflow: auto;
-}
-
-</style>
-<html>
-
-<head>
-    <title>InterScene</title>
-    <meta property="og:title" content="nlos" />
-</head>
-
-<body>	
-
-    <br>
-    <center>
-    <p>
-        <span style="font-size:42px"> Synthesizing Physically Plausible Human Motions <br> in 3D Scenes </span>
-    </p>
-    </center>
-    <br>
-    <div  align=center class="authors">
-       <a href="https://liangpan99.github.io/"> Liang Pan<sup>1</sup></a> 
-       &nbsp;  
-       <a href="https://scholar.google.com/citations?user=GStTsxAAAAAJ&hl=en&oi=ao/"> Jingbo Wang<sup>2</sup></a> 
-       &nbsp;  
-       <a href="http://www.buzhenhuang.com/"> Buzhen Huang<sup>1</sup></a> 
-       &nbsp;  
-       <a href="https://budiu-39.github.io/"> Junyu Zhang<sup>1</sup></a> 
-       <br>
-       <a href="https://haofanwang.github.io/"> Haofan Wang<sup>3</sup></a> 
-       &nbsp;  
-       <a href="https://tangxuvis.github.io/"> Xu Tang<sup>3</sup></a> 
-       &nbsp;  
-       <a href="https://www.yangangwang.com/"> Yangang Wang<sup>1</sup></a> 
-      
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<main id="main">
+  <header class="hero page-width">
+    <h1>Introducing InterScene</h1>
+    <p class="research-title">Synthesizing Physically Plausible Human Motions in 3D Scenes</p>
+    <div class="publication-links" aria-label="Publication resources">
+      <a class="button button-secondary" href="https://arxiv.org/abs/2308.09036">Read the paper <span aria-hidden="true">↗</span></a>
+      <a class="button button-code" href="https://github.com/liangpan99/InterScene">Code <span class="github-stars" title="GitHub stars"><span aria-hidden="true">☆</span><span id="github-star-count" aria-label="124 GitHub stars">124</span></span> <span aria-hidden="true">↗</span></a>
     </div>
-    <br>
-
-    <div> 
-        <table align=center width=500px>
-            <tr>
-                <td>
-                    Southeast University<sup>1</sup> 
-                </td>
-                <td>
-                    Shanghai AI Lab<sup>2</sup> 
-                </td>
-                <td>
-                    Xiaohongshu Inc.<sup>3</sup> 
-                </td>
-            </tr>
-        </table>
-       
+    <div class="research-credits">
+      <div class="authors">
+        <span><a href="https://liangpan99.github.io/">Liang Pan</a><sup>1</sup></span>
+        <span><a href="https://wangjingbo1219.github.io/">Jingbo Wang</a><sup>2</sup></span>
+        <span><a href="http://www.buzhenhuang.com/">Buzhen Huang</a><sup>1</sup></span>
+        <span><a href="https://budiu-39.github.io/">Junyu Zhang</a><sup>1</sup></span>
+        <span><a href="https://haofanwang.github.io/">Haofan Wang</a><sup>3</sup></span>
+        <span><a href="https://tangxuvis.github.io/">Xu Tang</a><sup>3</sup></span>
+        <span><a href="https://www.yangangwang.com/">Yangang Wang</a><sup>1,†</sup></span>
+      </div>
+      <div class="affiliations">
+        <span><sup>1</sup>Southeast University</span>
+        <span><sup>2</sup>Shanghai AI Lab</span>
+        <span><sup>3</sup>Xiaohongshu Inc.</span>
+      </div>
+      <p class="corresponding">† Corresponding author</p>
     </div>
-
-    <br>
-
-    <div align=center>
-        International Conference on 3D Vision (3DV 2024)
+    <div class="publication-venue">
+      <p class="venue-name">3DV 2024</p>
+      <p class="venue-description">International Conference on 3D Vision</p>
     </div>
-    
-    
-    <br>
-    <div align=center>
-        <a href="https://arxiv.org/abs/2308.09036"> [Paper]</a> &nbsp <a href="https://github.com/liangpan99/InterScene"> [Code]</a>
+  </header>
+  <figure class="teaser page-width">
+    <img src="assets/teaser.png" width="1784" height="567" alt="InterScene synthesizes physically plausible human motions across multi-object 3D scenes" fetchpriority="high">
+    <figcaption>Introducing InterScene, a physics-based framework for long-term human-scene interactions in diverse 3D scenes.</figcaption>
+  </figure>
+  <section class="section page-width overview" aria-labelledby="abstract-title">
+    <h2 id="abstract-title">Abstract</h2>
+    <div class="prose">
+      <p>We present a physics-based character control framework for synthesizing human-scene interactions. Recent advances adopt physics simulation to mitigate artifacts produced by data-driven kinematic approaches. However, existing physics-based methods mainly focus on single-object environments, resulting in limited applicability in realistic 3D scenes with multi-objects.</p>
+      <p>To address such challenges, we propose a framework that enables physically simulated characters to perform long-term interaction tasks in diverse, cluttered, and unseen 3D scenes. The key idea is to decouple human-scene interactions into two fundamental processes, <strong>Inter</strong>acting and <strong>Nav</strong>igating, which motivates us to construct two reusable <strong>Con</strong>trollers, namely <strong>InterCon</strong> and <strong>NavCon</strong>.</p>
+      <p>Specifically, InterCon uses two complementary policies to enable characters to enter or leave the interacting state with a particular object (e.g., sitting on a chair or getting up). To realize navigation in cluttered environments, we introduce NavCon, where a trajectory following policy enables characters to track pre-planned collision-free paths. Benefiting from the divide and conquer strategy, we can train all policies in simple environments and directly apply them in complex multi-object scenes through coordination from a rule-based scheduler.</p>
     </div>
-    <br>
-
-    <table align=center width=800px>
-    <tr><td>
-    <div  align=center class="content" width=400px>
-    <img height=300 src="assets/teaser.png"> </img>
-    
-    <br>
-    <p align="justify">
-        We present a physics-based character control framework for synthesizing human-scene interactions. 
-        Recent advances adopt physics simulation to mitigate artifacts produced by data-driven kinematic approaches. 
-        However, existing physics-based methods mainly focus on single-object environments, 
-        resulting in limited applicability in realistic 3D scenes with multi-objects. 
-        To address such challenges, we propose a framework that enables physically simulated characters to perform long-term interaction tasks in diverse, cluttered, and unseen 3D scenes. 
-        The key idea is to decouple human-scene interactions into two fundamental processes, 
-        <strong>Inter</strong>acting and <strong>Nav</strong>igating, 
-        which motivates us to construct two reusable <strong>Con</strong>trollers, namely <strong>InterCon</strong> and <strong>NavCon</strong>. 
-        Specifically, InterCon uses two complementary policies to enable characters to enter or leave the interacting state with a particular object 
-        (e.g., sitting on a chair or getting up). 
-        To realize navigation in cluttered environments, we introduce NavCon, 
-        where a trajectory following policy enables characters to track pre-planned collision-free paths. 
-        Benefiting from the divide and conquer strategy, 
-        we can train all policies in simple environments and directly apply them in complex multi-object scenes 
-        through coordination from a rule-based scheduler.
-    </p>
+  </section>
+  <!--
+  <section class="section page-width" aria-labelledby="poster-title">
+    <div class="section-heading"><h2 id="poster-title">Poster</h2></div>
+    <figure class="poster-figure">
+      <a href="assets/poster.jpg" aria-label="View the full-size InterScene poster"><img class="media-image" src="assets/poster.jpg" width="4536" height="3175" loading="lazy" alt="InterScene 3DV 2024 poster with the method, experiments, and results"></a>
+      <figcaption><a class="text-link" href="assets/poster.jpg">View full-size poster <span aria-hidden="true">↗</span></a></figcaption>
+    </figure>
+  </section>
+  -->
+  <section class="section page-width" aria-labelledby="motivation-title">
+    <div class="section-heading">
+      <h2 id="motivation-title">Motivation</h2>
+      <p>Existing physics-based scene interaction approaches cannot generalize to multi-object scenes due to the lack of two crucial abilities: (1) continuous interaction and (2) obstacle avoidance.</p>
     </div>
-    </td></tr>
-    </table>
-
-    <center>
-        <h1>Poster</h1>
-    </center>  
-    <hr>
-    <br>
-    <table  align=center width=900px>
-        <tr>
-        <td>
-            <img align="center" width="900px" src="assets/poster.jpg"></img>
-        </td>
-        </tr>
-        <tr>
-        </tr>
-
-    </table>
-
-    <center>
-        <h1>Motivation</h1>
-    </center>
-    <hr>
-    <br>
-    <table align="center" width=900px>
-        <tr>
-        <td colspan='2'>
-            <center>
-            <video width="450" controls muted autoplay loop>
-                <source src="./assets/motivation/multiobject_existing.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td>
-        <td>
-            <center>
-                <video width="450"  controls muted autoplay loop>
-                <source src="./assets/motivation/multiobject_ours.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td> 
-        </tr>
-
-        <tr>
-            <td colspan='2'>
-                <center>
-                <video width="450" controls muted autoplay loop>
-                    <source src="./assets/motivation/obstacle_existing.mp4" type="video/mp4">
-                </video>
-                </center>
-                <br>
-                <center>
-                    Previous works [<a href="https://arxiv.org/abs/1908.07423">1</a>, <a href="https://xbpeng.github.io/projects/InterPhys/index.html">2</a>]
-                </center>
-            </td>
-            <td>
-                <center>
-                    <video width="450"  controls muted autoplay loop>
-                    <source src="./assets/motivation/obstacle_ours.mp4" type="video/mp4">
-                </video>
-                </center>
-                <br>
-                <center>
-                    Ours
-                </center>
-            </td> 
-        </tr>
-
-    <table align="center" width=900px>
-        <tr>
-            <td>
-                <p>
-                Existing physics-based scene interaction approaches cannot generalize to multi-object scenes 
-                due to the lack of two crucial abilities: (1) continuous interaction and (2) obstacle avoidance.
-                </p>
-            </td>
-        </tr>
-    </table>
-    
-    <center>
-        <h1>Pipeline</h1>
-    </center>  
-    <hr>
-    <br>
-    <table  align=center width=900px>
-        <tr>
-        <td>
-            <img align="center" width="900px" src="assets/pipeline.png"></img>
-        </td>
-        </tr>
-        <tr>
-        <td>
-            <p>
-                Given a multi-object 3D scene, 
-                our goal is to synthesize long-term motion sequences 
-                by controlling a physics-based character to perform a series of scene interaction tasks. 
-                First, our system employs an interaction controller to provide two primary actions, 
-                i.e., sitting down and getting up. 
-                Second, we introduce a navigation controller to acquire another action, 
-                i.e., collision-free trajectory following. 
-                Finally, a rule-based action scheduler is exploited to obtain outputs 
-                by organizing reusable low-level actions according to user-designed instructions.
-            </p>
-        </td>
-        </tr>
-
-    </table>
-
-
-    <center>
-        <h1>Generated Long-term Motions in Diverse 3D Scenes</h1>
-    </center>
-    <hr>
-    <br>
-    <center>
-        <h2>Images</h2>
-    </center>
-    <table  align=center width=900px>
-        <tr>
-        <td>
-            <img align="center" width="900px" src="assets/results/images.jpg"></img>
-        </td>
-        </tr>
-    </table>
-
-    <center>
-        <h2>Videos</h2>
-    </center>
-    <table align="center" width=900px>
-        <tr>
-        <td colspan='3'>
-            <center>
-            <video width="300" controls muted autoplay loop>
-                <source src="./assets/results/scene_0_motion_1.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td>
-        <td>
-            <center>
-                <video width="300"  controls muted autoplay loop>
-                <source src="./assets/results/scene_0_motion_0.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td> 
-        <td>
-            <center>
-                <video width="300"  controls muted autoplay loop>
-                <source src="./assets/results/scene_0_motion_2.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td> 
-        </tr>
-    </table>
-
-    <table align="center" width=900px>
-        <tr>
-        <td colspan='3'>
-            <center>
-            <video width="300" controls muted autoplay loop>
-                <source src="./assets/results/scene_1_motion_2.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td>
-        <td>
-            <center>
-                <video width="300"  controls muted autoplay loop>
-                <source src="./assets/results/scene_1_motion_0.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td> 
-        <td>
-            <center>
-                <video width="300"  controls muted autoplay loop>
-                <source src="./assets/results/scene_1_motion_1.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td> 
-        </tr>
-    </table>
-
-    <table align="center" width=900px>
-        <tr>
-        <td colspan='2'>
-            <center>
-            <video width="300" controls muted autoplay loop>
-                <source src="./assets/results/scene_2_motion_0.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td>
-        <td>
-            <center>
-                <video width="300"  controls muted autoplay loop>
-                <source src="./assets/results/scene_2_motion_1.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td> 
-        <td>
-            <center>
-                <video width="300"  controls muted autoplay loop>
-                <source src="./assets/results/scene_2_motion_2.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td> 
-        </tr>
-    </table>
-
-    <center>
-        <h1>Extensibility</h1>
-    </center>
-    <hr>
-    <br>
-    <table align="center" width=900px>
-        <tr>
-            <td>
-                <img width="450" src="assets/scalability/lie.png"> </img>
-            </td> 
-        <td colspan='2'>
-            <center>
-            <video width="450" controls muted autoplay loop>
-                <source src="./assets/scalability/sitting_plus_lying.mp4" type="video/mp4">
-            </video>
-            </center>
-        </td>
-        </tr>
-    </table>
-
-    <table align="center" width=900px>
-        <tr>
-            <td>
-                By training an additional interaction controller, a new skill of lying down can be seamlessly integrated into our system,
-                which demonstrates the strong extensibility of our approach. Given two interaction controllers, our extended system enables the physics-based character to first lie on the sofa, then sits on
-                the chair, and finally lie on the bed, exhibiting more diverse long-term interactions.
-            </td> 
-        </tr>
-    </table>
-
-    <center>
-        <h1>Citation</h1>
-    </center>
-    <hr>
-
-        <div class="section bibtex">
-            <pre>
-@inproceedings{pan2024synthesizing,
-    title={Synthesizing physically plausible human motions in 3d scenes},
-    author={Pan, Liang and Wang, Jingbo and Huang, Buzhen and Zhang, Junyu and Wang, Haofan and Tang, Xu and Wang, Yangang},
-    booktitle={2024 International Conference on 3D Vision (3DV)},
-    pages={1498--1507},
-    year={2024},
-    organization={IEEE}
-}
-            </pre>
-        </div>
-
-
-
-    <center>
-        <h1>References</h1>
-    </center>
-    <hr>
-    <p>
-        <ul> 
-            <li>[1] <a href="https://arxiv.org/abs/1908.07423">Learning to Sit</a>: Synthesizing Human-Chair Interactions via Hierarchical Control, AAAI 2021.</li>
-            <li>[2] <a href="https://xbpeng.github.io/projects/InterPhys/index.html">InterPhys</a>: Synthesizing Physical Character-Scene Interactions, SIGGRAPH 2023.</li>
-            <li>[3] <a href="https://xbpeng.github.io/projects/AMP/index.html">AMP</a>: Adversarial Motion Priors for Stylized Physics-Based Character Control, SIGGRAPH 2021.</li>
-            <li>[4] <a href="https://research.nvidia.com/labs/toronto-ai/trace-pace/">Trace and Pace</a>: Controllable Pedestrian Animation via Guided Trajectory Diffusion, CVPR 2023.</li>
-            <li>We sincerely thank <a href="https://geometry.stanford.edu/projects/humor/">HuMoR</a> for its awesome renderer.</li>
-            <li>The website template is based on <a href="https://nileshkulkarni.github.io/nifty/">this project</a>. <br></li>
-        </ul>
-    </p>
-    <br>
-    
-    
-
+    <div class="comparison">
+      <h3>Continuous Interaction</h3>
+      <div class="video-grid">
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/motivation-multiobject_existing.jpg" aria-label="Continuous Interaction: previous works"><source src="assets/motivation/multiobject_existing.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Previous works <a class="text-link" href="https://arxiv.org/abs/1908.07423">[1]</a>, <a class="text-link" href="https://xbpeng.github.io/projects/InterPhys/index.html">[2]</a></figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/motivation-multiobject_ours.jpg" aria-label="Continuous Interaction: InterScene"><source src="assets/motivation/multiobject_ours.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Ours</figcaption>
+        </figure>
+      </div>
+    </div><div class="comparison">
+      <h3>Obstacle Avoidance</h3>
+      <div class="video-grid">
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/motivation-obstacle_existing.jpg" aria-label="Obstacle Avoidance: previous works"><source src="assets/motivation/obstacle_existing.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Previous works <a class="text-link" href="https://arxiv.org/abs/1908.07423">[1]</a>, <a class="text-link" href="https://xbpeng.github.io/projects/InterPhys/index.html">[2]</a></figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/motivation-obstacle_ours.jpg" aria-label="Obstacle Avoidance: InterScene"><source src="assets/motivation/obstacle_ours.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Ours</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+  <section class="section page-width" aria-labelledby="pipeline-title">
+    <div class="section-heading">
+      <h2 id="pipeline-title">Pipeline</h2>
+      <p>Given a multi-object 3D scene, our goal is to synthesize long-term motion sequences by controlling a physics-based character to perform a series of scene interaction tasks.</p>
+      <p>First, our system employs an interaction controller to provide two primary actions, i.e., sitting down and getting up. Second, we introduce a navigation controller to acquire another action, i.e., collision-free trajectory following. Finally, a rule-based action scheduler is exploited to obtain outputs by organizing reusable low-level actions according to user-designed instructions.</p>
+    </div>
+    <figure class="pipeline"><img src="assets/pipeline.png" width="2840" height="1190" loading="lazy" alt="InterScene pipeline: interaction controller, navigation controller, and rule-based action scheduler"></figure>
+  </section>
+  <section class="section page-width" aria-labelledby="results-title">
+    <div class="section-heading"><h2 id="results-title">Generated Long-Term Motions in Diverse 3D Scenes</h2></div>
+    <figure><img class="media-image" src="assets/results/images.jpg" width="3345" height="2597" loading="lazy" alt="Generated long-term human motions in three different multi-object 3D scenes"></figure>
+    <div class="results-videos">
+      <div class="scene">
+      <h3>Scene 1</h3>
+      <div class="video-grid video-grid-three">
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_0_motion_1.jpg" aria-label="Scene 1 · Motion 02"><source src="assets/results/scene_0_motion_1.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 1 · Motion 02</figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_0_motion_0.jpg" aria-label="Scene 1 · Motion 01"><source src="assets/results/scene_0_motion_0.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 1 · Motion 01</figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_0_motion_2.jpg" aria-label="Scene 1 · Motion 03"><source src="assets/results/scene_0_motion_2.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 1 · Motion 03</figcaption>
+        </figure>
+      </div>
+    </div><div class="scene">
+      <h3>Scene 2</h3>
+      <div class="video-grid video-grid-three">
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_1_motion_2.jpg" aria-label="Scene 2 · Motion 03"><source src="assets/results/scene_1_motion_2.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 2 · Motion 03</figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_1_motion_0.jpg" aria-label="Scene 2 · Motion 01"><source src="assets/results/scene_1_motion_0.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 2 · Motion 01</figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_1_motion_1.jpg" aria-label="Scene 2 · Motion 02"><source src="assets/results/scene_1_motion_1.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 2 · Motion 02</figcaption>
+        </figure>
+      </div>
+    </div><div class="scene">
+      <h3>Scene 3</h3>
+      <div class="video-grid video-grid-three">
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_2_motion_0.jpg" aria-label="Scene 3 · Motion 01"><source src="assets/results/scene_2_motion_0.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 3 · Motion 01</figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_2_motion_1.jpg" aria-label="Scene 3 · Motion 02"><source src="assets/results/scene_2_motion_1.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 3 · Motion 02</figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/results-scene_2_motion_2.jpg" aria-label="Scene 3 · Motion 03"><source src="assets/results/scene_2_motion_2.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Scene 3 · Motion 03</figcaption>
+        </figure>
+      </div>
+    </div>
+    </div>
+  </section>
+  <section class="section page-width" aria-labelledby="extensibility-title">
+    <div class="section-heading">
+      <h2 id="extensibility-title">Extensibility</h2>
+      <p>By training an additional interaction controller, a new skill of lying down can be seamlessly integrated into our system, which demonstrates the strong extensibility of our approach. Given two interaction controllers, our extended system enables the physics-based character to first lie on the sofa, then sits on the chair, and finally lie on the bed, exhibiting more diverse long-term interactions.</p>
+    </div>
+    <div class="video-grid extensibility-grid">
+      <figure class="demo"><div class="image-frame"><img src="assets/scalability/lie.png" width="1739" height="1550" loading="lazy" alt="Additional interaction controller for lying down"></div><figcaption>Lying down</figcaption></figure>
+      <figure class="demo">
+          <div class="video-frame"><video controls muted loop playsinline preload="none" poster="static/images/posters/scalability-sitting_plus_lying.jpg" aria-label="Combining sitting and lying down"><source src="assets/scalability/sitting_plus_lying.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+          <figcaption>Combining sitting and lying down</figcaption>
+        </figure>
+    </div>
+  </section>
+  <section class="section page-width citations" id="BibTeX" aria-labelledby="citation-title">
+    <div class="citation-heading"><h2 id="citation-title">BibTeX</h2><button class="button button-secondary" type="button" data-copy="citation-code" hidden>Copy BibTeX</button></div>
+    <p class="copy-status" role="status" aria-live="polite"></p>
+    <pre tabindex="0"><code id="citation-code">@inproceedings{pan2024synthesizing,
+  title={Synthesizing physically plausible human motions in 3d scenes},
+  author={Pan, Liang and Wang, Jingbo and Huang, Buzhen and Zhang, Junyu and Wang, Haofan and Tang, Xu and Wang, Yangang},
+  booktitle={2024 International Conference on 3D Vision (3DV)},
+  pages={1498--1507},
+  year={2024},
+  organization={IEEE}
+}</code></pre>
+  </section>
+  <section class="section page-width" aria-labelledby="references-title">
+    <h2 id="references-title">References</h2>
+    <ol class="references">
+      <li><a href="https://arxiv.org/abs/1908.07423">Learning to Sit</a>: Synthesizing Human-Chair Interactions via Hierarchical Control, AAAI 2021.</li>
+      <li><a href="https://xbpeng.github.io/projects/InterPhys/index.html">InterPhys</a>: Synthesizing Physical Character-Scene Interactions, SIGGRAPH 2023.</li>
+      <li><a href="https://xbpeng.github.io/projects/AMP/index.html">AMP</a>: Adversarial Motion Priors for Stylized Physics-Based Character Control, SIGGRAPH 2021.</li>
+      <li><a href="https://research.nvidia.com/labs/toronto-ai/trace-pace/">Trace and Pace</a>: Controllable Pedestrian Animation via Guided Trajectory Diffusion, CVPR 2023.</li>
+    </ol>
+    <p class="acknowledgments">We sincerely thank <a href="https://geometry.stanford.edu/projects/humor/">HuMoR</a> for its awesome renderer.<br>Original website template based on <a href="https://nileshkulkarni.github.io/nifty/">NIFTY</a>.</p>
+  </section>
+</main>
+<footer class="page-width footer"><span>InterScene</span><span>3DV 2024</span></footer>
 </body>
-
 </html>
